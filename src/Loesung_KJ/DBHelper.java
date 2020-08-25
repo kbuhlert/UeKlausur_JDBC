@@ -79,6 +79,7 @@ public class DBHelper {
         String nachname = k.getNachname();
         String geschlecht = k.getGeschlecht();
         int bonuspunkte = k.getBonuspunkte();
+        int KDNR;
 
         String insert = "INSERT INTO kunden(Vorname, Nachname, Geschlecht, Bonuspunkte) VALUES (?,?,?,?);";
         try {
@@ -89,6 +90,16 @@ public class DBHelper {
             pstm.setInt(4,bonuspunkte);
             pstm.executeUpdate();
             System.out.println("Datensatz: Kunde " + nachname + ", " + vorname + " wurde in Tabelle eingefügt");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        try {
+            Statement stm = con.createStatement();
+            ResultSet rs = stm.executeQuery("SELECT last_insert_rowid();");
+            rs.next();
+            KDNR = rs.getInt(1);
+            k.setKDNR(KDNR);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -167,8 +178,7 @@ public class DBHelper {
 
     //Aufg 5a) Einfügen von Kunde und Ausgabe von rowID
     public int insertKunde (Kunde k){
-        int KDNR = 0;
-
+        int KDNR = k.getKDNR();
         String vorname = k.getVorname();
         String nachname = k.getNachname();
         String geschlecht = k.getGeschlecht();
@@ -192,6 +202,7 @@ public class DBHelper {
             ResultSet rs = stm.executeQuery("SELECT last_insert_rowid();");
             rs.next();
             KDNR = rs.getInt(1);
+            k.setKDNR(KDNR);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -206,7 +217,7 @@ public class DBHelper {
         String nachname = k.getNachname();
         String geschlecht = k.getGeschlecht();
         int bonuspunkte = k.getBonuspunkte();
-        int KDNR = 0;   //todo: Klären, wie bekomme ich KDNR, wenn es nicht als PArameter übergeben wird
+        int KDNR = k.getKDNR();   //todo: Klären, wie bekomme ich KDNR, wenn es nicht als PArameter übergeben wird
 
         String updateKunde = "UPDATE Kunde SET Vorname='" + vorname +
                 "', Nachname='" + nachname +

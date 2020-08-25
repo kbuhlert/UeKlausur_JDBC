@@ -6,11 +6,13 @@ public class Rechnung {
     String Datum;
     Double Gesamtbetrag;
     int KDNR;
+    int ReNr;
 
     public Rechnung(String datum, Double gesamtbetrag, int KDNR) {
         Datum = datum;
         Gesamtbetrag = gesamtbetrag;
         this.KDNR = KDNR;
+        ReNr = 0;
     }
 
     public String getDatum() {
@@ -32,6 +34,14 @@ public class Rechnung {
 
     public int getKDNR() {
         return KDNR;
+    }
+
+    public int getReNr() {
+        return ReNr;
+    }
+
+    public void setReNr(int reNr) {
+        ReNr = reNr;
     }
 
     public void setKDNR(int KDNR) {

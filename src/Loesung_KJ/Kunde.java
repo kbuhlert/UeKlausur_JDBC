@@ -8,12 +8,14 @@ public class Kunde {
     String Nachname;
     String Geschlecht;
     int Bonuspunkte;
+    int KDNR;
 
     public Kunde(String vorname, String nachname, String geschlecht, int bonuspunkte) {
         Vorname = vorname;
         Nachname = nachname;
         Geschlecht = geschlecht;
         Bonuspunkte = bonuspunkte;
+        int KDNR = 0;
     }
 
     public String getVorname() {
@@ -48,20 +50,12 @@ public class Kunde {
         Bonuspunkte = bonuspunkte;
     }
 
-    //FRAGE!!!: wie bekomme ich Kundennr aus Tabelle kunden?
-    public int getKDNR(){
-        int KDNR = 0;
-        try {
-            Connection con = DriverManager.getConnection("jdbc:sqlite:UeKlausur");
-            Statement stmt = con.createStatement();
-            //hier wäre die Abfrage mit den bekannten Kundenparametern evtl nicht eindeutig (Namen, etc. könnten mehrfach vorkommen)
-            ResultSet rs = stmt.executeQuery("SELECT KDNR FROM kunden WHERE Nachname=" + Nachname + ";");
-            rs.next();
-           KDNR = rs.getInt(1);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+    public int getKDNR() {
         return KDNR;
+    }
+
+    public void setKDNR(int KDNR) {
+        this.KDNR = KDNR;
     }
 
     @Override
